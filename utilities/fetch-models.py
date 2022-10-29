@@ -36,12 +36,13 @@ def save_model(var_id, mod_id, exp_id):
     ds.to_zarr(model_path, mode='w')
 
 
-land = "sftlf"
-land_ice = "sftgif"
-sea_ice_atm = "siconca"
+land = "sftlf" # Percentage of the grid cell occupied by land (including lakes) [%]
+land_ice = "sftgif" # Land Ice Area Percentage [%]
+sea_ice_atm = "siconca" # Sea-ice Area Percentage (Atmospheric Grid) [%]
+grid_area = "areacella" # Grid-Cell Area for Atmospheric Grid Variables [m2]
 
-mod_id = "CanESM5" # for land and land_ice
+mod_id = "CanESM5" # for land, land_ice, grid area
 # mod_id = "CESM2" #for sea_ice_atm
 exp_id = "piControl"
 
-#save_model(land, mod_id, exp_id)
+#save_model(grid_area, mod_id, exp_id)
