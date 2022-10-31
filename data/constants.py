@@ -32,16 +32,16 @@ LOI_rho_Z_c = np.array([rho_land*Z_land*c_land, rho_ocean*Z_ocean*c_ocean, rho_i
 LOI_alpha = np.array([alpha_land, alpha_ocean, alpha_ice])
 
 # Land, ocean, ice fractions for each zone as a vector. Columns are for [land, ocean, ice], rows correspond to each zone
-fractions = np.genfromtxt('data/zonalfractions.csv', delimiter=',')
+fractions = np.genfromtxt('data/model-zonal-fractions.csv', delimiter=',')
 
 # Vector constants dependent on zone
 k = np.genfromtxt('data/thermalexchangecoeffs.csv', delimiter=',') # Thermal exchange coefficient [W/m/K]
 a = np.zeros(8)
 a[1:7] = 0.5*np.array(list(map(lambda i: np.sin(np.pi*(-0.5+(i+1)/6)) - np.sin(np.pi*(-0.5+i/6)), range(6)))) # Zonal area fractions vector
 gamma = np.array([0, 0.1076, 0.2277, 0.3045, 0.3045, 0.2277, 0.1076, 0]) # Zonal geometric fractions vector
-L = np.zeros(8)
+L = np.zeros(7)
 L[1:6] = 2*np.pi*R_E*np.array(list(map(lambda i: np.cos(np.pi*(-0.5+i/6)), range(1,6)))) # Boundary lengths vector
 
 # Area averaged properties for each zone as vectors
-rho_c_Z = np.dot(fractions,LOI_rho_Z_c) # Area averaged product of density, specific heat capacity, thermal scale depth 
-alpha = np.dot(fractions, LOI_alpha) # Area averaged albedo
+rho_c_Z = np.pad(np.dot(fractions, LOI_rho_Z_c), (1, 1), constant_values=(1, 1)) # Area averaged product of density, specific heat capacity, thermal scale depth 
+alpha = np.pad(np.dot(fractions, LOI_alpha), (1, 1)) # Area averaged albedo

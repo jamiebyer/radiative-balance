@@ -27,8 +27,10 @@ def save_model(var_id, mod_id, exp_id):
     
     query = "variable_id=='"+var_id+"' & experiment_id=='"+exp_id+"' & source_id=='"+mod_id+"'"
     df = df_og.query(query)
+    print(df["table_id"])
     #print(df.drop_duplicates(['source_id'])['source_id'])
     zstore_url = df["zstore"].values[0]
+    print(zstore_url)
     the_mapper=fs.get_mapper(zstore_url)
     ds = xr.open_zarr(the_mapper, consolidated=True)
 
@@ -40,9 +42,10 @@ land = "sftlf" # Percentage of the grid cell occupied by land (including lakes) 
 land_ice = "sftgif" # Land Ice Area Percentage [%]
 sea_ice_atm = "siconca" # Sea-ice Area Percentage (Atmospheric Grid) [%]
 grid_area = "areacella" # Grid-Cell Area for Atmospheric Grid Variables [m2]
+temp = "ta" # Air Temperature [K]
 
 mod_id = "CanESM5" # for land, land_ice, grid area
 # mod_id = "CESM2" #for sea_ice_atm
 exp_id = "piControl"
 
-#save_model(grid_area, mod_id, exp_id)
+#save_model(temp, mod_id, exp_id)
