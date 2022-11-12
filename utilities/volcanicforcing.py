@@ -4,7 +4,7 @@ from scipy.interpolate import interp1d
 mon2sec = 30*24*3600 # conversion factor between months and seconds
 
 ## PARAMETERS TO CHANGE ##################################################################################
-t_start = 0 # time when eruption happens [seconds]
+t_start = 0*mon2sec # time when eruption happens [seconds]
 
 D = 30 # Diffusion rate [(lattitude degrees)^2/month]
 gamma = 0.01  # Precipitation rate [1/month]
@@ -89,8 +89,10 @@ def phi(tt, tt_max):
         phi_funcs = create_phi_funcs(tt_max)
     else:
         phi_funcs = phi_k
-    t = tt - t_start
     phi_k_t = np.ones(8)
+    if tt < t_start:
+        return phi_k_t
+    t = tt - t_start
     for k in range(1,7):
         phi_k_t[k] = phi_funcs[k-1](t)
     return phi_k_t
