@@ -7,13 +7,15 @@ from scipy.integrate import solve_ivp
 def plot_model():
     # Time interval for integration (in seconds)
     t_min = 0
-    t_max = 1E11
+    # t_max = 1E11
+    t_max = 3E8
     max_step = 1E6
 
     # Initial temperatures
     T_init = [0, 212, 280, 296, 295, 268, 210, 0]
 
-    sol = solve_ivp(fun=dT_dt, t_span=(t_min, t_max), y0=T_init, method="LSODA", max_step=max_step)
+    dTdtFunc = lambda t, T: dT_dt(t,T,t_max)
+    sol = solve_ivp(fun=dTdtFunc, t_span=(t_min, t_max), y0=T_init, method="LSODA", max_step=max_step)
     t = sol.t
     T = sol.y.T
 
