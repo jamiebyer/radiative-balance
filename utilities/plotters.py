@@ -5,7 +5,7 @@ import xarray as xr
 from utilities.odes import dT_dt, dT_dt_2d
 from scipy.integrate import solve_ivp
 from utilities.write_from_models import get_2d_constants
-from mpl_toolkits.basemap import Basemap
+#from mpl_toolkits.basemap import Basemap
 import plotly.graph_objects as go
 import plotly.express as px
 from mpl_toolkits.axes_grid1 import make_axes_locatable
@@ -35,6 +35,7 @@ def plot_model():
     plt.tight_layout()
     plt.show()
 
+'''
 def plot_2d_model():
     # Resolution
     lat_res = 50
@@ -190,3 +191,4 @@ def plot_maps():
         plt.tight_layout()
 
     plt.show()
+    '''
