@@ -1,9 +1,11 @@
-from utilities.plotters import plot_model, plot_maps
+from utilities.plotters import *
 
 def main():
-    # call plotters here
-    plot_model()
-    # plot_maps
+    #plot_model()
+    #plot_2d_model()
+    #animate_2d_model(save=True)
+    #plot_albedo()
+    #plot_maps()
 
 
 if __name__ == '__main__':
