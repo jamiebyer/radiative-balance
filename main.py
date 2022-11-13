@@ -1,13 +1,14 @@
 from utilities.plotters import *
 
-
 def main():    
-    # call plotters here
+    #plot_model()
+    #plot_2d_model()
+    #animate_2d_model(save=True)
      plt.figure(1)
-     plot_model()
+     #plot_albedo()
     #plt.figure(2)
     #plot_model_fracchanges()
-    # plot_maps()
+    #plot_maps()()
 
 
 if __name__ == '__main__':
