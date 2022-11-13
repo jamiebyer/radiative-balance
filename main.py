@@ -1,9 +1,13 @@
-from utilities.plotters import plot_model, plot_maps
+from utilities.plotters import *
 
-def main():
+
+def main():    
     # call plotters here
-    plot_model()
-    # plot_maps
+    # plt.figure(1)
+    #plot_model()
+    plt.figure(2)
+    plot_model_fracchanges()
+    # plot_maps()
 
 
 if __name__ == '__main__':
