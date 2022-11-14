@@ -17,6 +17,7 @@ dt = 0.2 # time step [months]
 t_end = 12*10 # stop time [months] for shorter computation
 
 dt_long = 60 # longer time step for extrapolation [months]
+global t_max
 t_max = 2E11/mon2sec # maximum time [months]
 ###########################################################################################################
 
@@ -82,9 +83,12 @@ def create_phi_funcs(tt_max):
         phi_funcs.append(interp1d(t*mon2sec,phi_k[i,:]))
     return phi_funcs
 
+global phi_k
 phi_k = create_phi_funcs(t_max)
 
 def phi(tt, tt_max):
+    global t_max
+    global phi_k
     if tt_max > t_max*mon2sec:
         phi_k = create_phi_funcs(tt_max)
         t_max = tt_max/mon2sec + 1

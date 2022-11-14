@@ -37,7 +37,6 @@ def plot_model():
 def plot_model_withforcing():
     # Time interval for integration (in seconds)
     t_min = 0
-    # t_max = 1E11
     t_max = 3E8
     max_step = 1E6
 
