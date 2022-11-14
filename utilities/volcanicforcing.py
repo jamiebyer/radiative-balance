@@ -50,7 +50,6 @@ def init_dist(x,width,amp): # Define the initial distribution
     return amp*np.exp(1)*A0
 
 def plot_forcing(t,A,phi_k):
-    plt.figure(20)
     fig,ax = plt.subplots(2,figsize=(10,10))
     # plot spatial distribution
     sampling_time_indices = [0,5,10,25,50,200]
@@ -65,16 +64,15 @@ def plot_forcing(t,A,phi_k):
     ax[0].set_ylabel('Relative aerosol concentration')
     ax[0].set_xticks(zone_xticks)
     # plot temporal distribution
-    t_seconds = t*mon2sec
     for xx in range(3):
-        ax[1].plot(t_seconds,phi_k[xx,:])
+        ax[1].plot(t/12,phi_k[xx,:])
     ax[1].legend(['Zones 1 & 6', 'Zones 2 & 5', 'Zones 3 & 4'])
     ax[1].set_title(r"Zonal radiation reductions, $\beta$ = {}".format(beta))
-    ax[1].set_xlabel('Time [seconds]')
+    ax[1].set_xlabel('Time (yr)')
     ax[1].set_ylabel('Relative incoming radiation')
     plt.show()
     figname = "figures/forcing_{}_{}_{}_{}.png".format(D,gamma,B,beta)
-    plt.savefig(figname)
+    fig.savefig(figname)
 
 
 def create_phi_funcs(tt_max):

@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import animation
 import xarray as xr
-from utilities.odes import dT_dt, dT_dt_2d, dT_dt_phi
+from utilities.odes import dT_dt, dT_dt_2d, dT_dt_phi, D, gamma, B, beta
 from scipy.integrate import solve_ivp
 # from utilities.write_from_models import get_2d_constants
 #from mpl_toolkits.basemap import Basemap
@@ -50,12 +50,14 @@ def plot_model_withforcing():
 
     plt.plot(t / 3.154E7, T[:, 1:-1])
     
-    plt.title("radiative balance")
-    plt.xlabel("time (yr)")
-    plt.ylabel("temperature (K)")
+    plt.title("Radiative balance")
+    plt.xlabel("Time (yr)")
+    plt.ylabel("Temperature (K)")
     plt.legend(["zone 1", "zone 2", "zone 3", "zone 4", "zone 5", "zone 6"])
     
     plt.tight_layout()
+    figname = "figures/radiative-balance-F{}_{}_{}_{}.png".format(D, gamma, B, beta)
+    plt.savefig(figname)
     plt.show()
 
 '''

@@ -1,7 +1,7 @@
 from utilities.plotters import *
 
 def main():    
-    plt.figure(1)
+    plt.figure(1,figsize=(10,7))
     # plot_model()
     plot_model_withforcing()
     #plot_2d_model()
