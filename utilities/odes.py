@@ -1,6 +1,6 @@
 
 from data.constants import *
-from utilities.volcanicforcing import phi, D, gamma, B, beta
+from utilities.volcanicforcing import phi, D, gamma, B, beta, mon2sec
 from utilities.update_functions import *
 
 def dT_dt(t, T):

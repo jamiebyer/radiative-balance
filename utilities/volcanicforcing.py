@@ -8,14 +8,14 @@ mon2sec = 30*24*3600 # conversion factor between months and seconds
 t_start = 0*mon2sec # time when eruption happens [seconds]
 
 D = 30 # Diffusion rate [(lattitude degrees)^2/month]
-gamma = 0.01  # Precipitation rate [1/month]
+gamma = 0.05  # Precipitation rate [1/month]
 
 a = 15 # Half-width of eruption/initial aerosol column [lattitude degrees]
-B = 0.5 # Maximum relative aerosol concentration
-beta = 0.75 # Scale factor when converting relative aerosol concentration to relative radiation blocking
+B = 1 # Maximum relative aerosol concentration
+beta = 0.25 # Scale factor when converting relative aerosol concentration to relative radiation blocking
 
 dt = 0.2 # time step [months]
-t_end = 12*10 # stop time [months] for shorter computation
+t_end = 12*20 # stop time [months] for shorter computation
 
 dt_long = 60 # longer time step for extrapolation [months]
 global t_max
@@ -71,7 +71,7 @@ def plot_forcing(t,A,phi_k):
     ax[1].set_xlabel('Time (yr)')
     ax[1].set_ylabel('Relative incoming radiation')
     plt.show()
-    figname = "figures/forcing_{}_{}_{}_{}.png".format(D,gamma,B,beta)
+    figname = "figures/forcing/forcing_{}_{}_{}_{}.png".format(D,gamma,B,beta)
     fig.savefig(figname)
 
 

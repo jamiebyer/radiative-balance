@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import animation
 import xarray as xr
-from utilities.odes import dT_dt, dT_dt_2d, dT_dt_phi, D, gamma, B, beta
+from utilities.odes import dT_dt, dT_dt_2d, dT_dt_phi, D, gamma, B, beta, mon2sec
 from scipy.integrate import solve_ivp
 # from utilities.write_from_models import get_2d_constants
 #from mpl_toolkits.basemap import Basemap
@@ -37,7 +37,7 @@ def plot_model():
 def plot_model_withforcing():
     # Time interval for integration (in seconds)
     t_min = 0
-    t_max = 3E8
+    t_max = 20*12*mon2sec
     max_step = 1E6
 
     # Initial temperatures
@@ -56,7 +56,7 @@ def plot_model_withforcing():
     plt.legend(["zone 1", "zone 2", "zone 3", "zone 4", "zone 5", "zone 6"])
     
     plt.tight_layout()
-    figname = "figures/radiative-balance-F{}_{}_{}_{}.png".format(D, gamma, B, beta)
+    figname = "figures/radiative-balance-forcing/radiative-balance-F{}_{}_{}_{}.png".format(D, gamma, B, beta)
     plt.savefig(figname)
     plt.show()
 
