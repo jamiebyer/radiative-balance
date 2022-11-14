@@ -4,7 +4,7 @@ from matplotlib import animation
 import xarray as xr
 from utilities.odes import *
 from scipy.integrate import solve_ivp
-from utilities.write_from_models import get_2d_constants
+#from utilities.write_from_models import get_2d_constants
 #from mpl_toolkits.basemap import Basemap
 import plotly.graph_objects as go
 import plotly.express as px
@@ -14,7 +14,7 @@ def plot_model():
     # Time interval for integration (in seconds)
     t_min = 0
     # t_max = 1E11
-    t_max = 3E8
+    t_max = 1E11
     max_step = 1E6
 
     # Initial temperatures

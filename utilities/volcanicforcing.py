@@ -4,13 +4,13 @@ from scipy.interpolate import interp1d
 mon2sec = 30*24*3600 # conversion factor between months and seconds
 
 ## PARAMETERS TO CHANGE ##################################################################################
-t_start = 0*mon2sec # time when eruption happens [seconds]
+t_start = 500*12*mon2sec # time when eruption happens [seconds]
 
 D = 30 # Diffusion rate [(lattitude degrees)^2/month]
 gamma = 0.01  # Precipitation rate [1/month]
 
 a = 15 # Half-width of eruption/initial aerosol column [lattitude degrees]
-B = 0.5 # Maximum relative aerosol concentration
+B = 0.8 # Maximum relative aerosol concentration
 beta = 0.75 # Scale factor when converting relative aerosol concentration to relative radiation blocking
 
 dt = 0.2 # time step [months]
