@@ -45,3 +45,6 @@ L[1:6] = 2*np.pi*R_E*np.array(list(map(lambda i: np.cos(np.pi*(-0.5+i/6)), range
 # Area averaged properties for each zone as vectors
 rho_c_Z = np.pad(np.dot(fractions, LOI_rho_Z_c), (1, 1), constant_values=(1, 1)) # Area averaged product of density, specific heat capacity, thermal scale depth 
 alpha = np.pad(np.dot(fractions, LOI_alpha), (1, 1)) # Area averaged albedo
+
+# Temperature anomalies 
+temp_anomalies = np.genfromtxt('data/global-temp-anomalies.csv', delimiter=',')

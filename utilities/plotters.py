@@ -201,7 +201,8 @@ def plot_model_fracchanges():
     # Initial temperatures
     T_init = [0, 212, 280, 296, 295, 268, 210, 0]
 
-    sol = solve_ivp(fun=dT_dt_changefrac, t_span=(t_min, t_max), y0=T_init, method="LSODA", max_step=max_step)
+    dTdtFunc = lambda t, T: dT_dt_changefrac(t,T,t_max)
+    sol = solve_ivp(fun=dTdtFunc, t_span=(t_min, t_max), y0=T_init, method="LSODA", max_step=max_step)
     t = sol.t
     T = sol.y.T
 
