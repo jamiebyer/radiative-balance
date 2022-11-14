@@ -1,5 +1,6 @@
 import numpy as np
 from scipy.interpolate import interp1d
+import matplotlib.pyplot as plt
 
 mon2sec = 30*24*3600 # conversion factor between months and seconds
 
@@ -18,7 +19,7 @@ t_end = 12*10 # stop time [months] for shorter computation
 
 dt_long = 60 # longer time step for extrapolation [months]
 global t_max
-t_max = 2E11/mon2sec # maximum time [months]
+t_max = 1.1E11/mon2sec # maximum time [months]
 ###########################################################################################################
 
 N = 50 # Number of spatial intervals
@@ -48,6 +49,33 @@ def init_dist(x,width,amp): # Define the initial distribution
     A0[inrange] = A0temp[inrange]
     return amp*np.exp(1)*A0
 
+def plot_forcing(t,A,phi_k):
+    plt.figure(20)
+    fig,ax = plt.subplots(2,figsize=(10,10))
+    # plot spatial distribution
+    sampling_time_indices = [0,5,10,25,50,200]
+    zone_xticks = [-90,-60,-30,0,30,60,90]
+    legend = []
+    for i in sampling_time_indices:
+        ax[0].plot(x,A[:,i])
+        legend.append('t = {} months'.format(t[i]))
+    ax[0].legend(legend)
+    ax[0].set_title("Aerosol distributions, D = {}, $\gamma$ = {}, B = {}".format(D,gamma,B))
+    ax[0].set_xlabel('Latitude degrees')
+    ax[0].set_ylabel('Relative aerosol concentration')
+    ax[0].set_xticks(zone_xticks)
+    # plot temporal distribution
+    t_seconds = t*mon2sec
+    for xx in range(3):
+        ax[1].plot(t_seconds,phi_k[xx,:])
+    ax[1].legend(['Zones 1 & 6', 'Zones 2 & 5', 'Zones 3 & 4'])
+    ax[1].set_title(r"Zonal radiation reductions, $\beta$ = {}".format(beta))
+    ax[1].set_xlabel('Time [seconds]')
+    ax[1].set_ylabel('Relative incoming radiation')
+    plt.show()
+    figname = "figures/forcing_{}_{}_{}_{}.png".format(D,gamma,B,beta)
+    plt.savefig(figname)
+
 
 def create_phi_funcs(tt_max):
     if tt_max > t_max*mon2sec:
@@ -73,6 +101,8 @@ def create_phi_funcs(tt_max):
             xrange = (x>=j*30)*(x<=(j+1)*30)
             phi_k[j+3,i] = np.mean(phi_continuous[xrange,i]) # Calculate zonal average
     
+    plot_forcing(t,A,phi_k)
+
     t_span_long = np.arange(t_end,t_end_long,dt_long)
     phi_extension = np.array(list(map(lambda k: 1-(1-phi_k[k,-1])*np.exp(gamma*t[-1])*np.exp(-gamma*t_span_long),range(6))))
     phi_k = np.append(phi_k,phi_extension,axis=1)
