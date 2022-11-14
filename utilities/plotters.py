@@ -14,7 +14,7 @@ def plot_model():
     # Time interval for integration (in seconds)
     t_min = 0
     # t_max = 1E11
-    t_max = 3E8
+    t_max = 50*12*mon2sec
     max_step = 1E6
 
     # Initial temperatures
@@ -37,7 +37,7 @@ def plot_model():
 def plot_model_withforcing():
     # Time interval for integration (in seconds)
     t_min = 0
-    t_max = 50*12*mon2sec
+    t_max = 20*12*mon2sec
     max_step = 1E6
 
     # Initial temperatures
@@ -50,14 +50,14 @@ def plot_model_withforcing():
 
     plt.plot(t / 3.154E7, T[:, 1:-1])
     
-    plt.title("Radiative balance")
+    plt.title("Radiative balance with forcing")
     plt.xlabel("Time (yr)")
     plt.ylabel("Temperature (K)")
     plt.legend(["zone 1", "zone 2", "zone 3", "zone 4", "zone 5", "zone 6"])
     
     plt.tight_layout()
     figname = "figures/radiative-balance-forcing/radiative-balance-F{}_{}_{}_{}.png".format(D, gamma, B, beta)
-    plt.savefig(figname)
+    # plt.savefig(figname)
     plt.show()
 
 '''

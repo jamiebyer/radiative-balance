@@ -3,6 +3,9 @@ from scipy.interpolate import interp1d
 import matplotlib.pyplot as plt
 
 mon2sec = 30*24*3600 # conversion factor between months and seconds
+global t_max
+t_max = 1.1E11/mon2sec # maximum time [months]
+dt_long = 60 # longer time step for extrapolation [months]
 
 ## PARAMETERS TO CHANGE ##################################################################################
 t_start = 0*mon2sec # time when eruption happens [seconds]
@@ -16,10 +19,6 @@ beta = 0.25 # Scale factor when converting relative aerosol concentration to rel
 
 dt = 0.2 # time step [months]
 t_end = 12*20 # stop time [months] for shorter computation
-
-dt_long = 60 # longer time step for extrapolation [months]
-global t_max
-t_max = 1.1E11/mon2sec # maximum time [months]
 ###########################################################################################################
 
 N = 50 # Number of spatial intervals
