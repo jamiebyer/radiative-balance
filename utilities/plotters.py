@@ -38,7 +38,7 @@ def plot_model_withforcing():
     # Time interval for integration (in seconds)
     mon2sec = 30*24*3600
     t_min = 0
-    t_max = 20*12*mon2sec
+    t_max = 10*12*mon2sec
     max_step = 1E6
 
     # Initial temperatures
