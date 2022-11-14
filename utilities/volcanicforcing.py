@@ -11,7 +11,7 @@ dt_long = 60 # longer time step for extrapolation [months]
 t_start = 0*mon2sec # time when eruption happens [seconds]
 
 D = 30 # Diffusion rate [(lattitude degrees)^2/month]
-gamma = 0.05  # Precipitation rate [1/month]
+Gamma = 0.05  # Precipitation rate [1/month]
 
 a = 15 # Half-width of eruption/initial aerosol column [lattitude degrees]
 B = 1 # Maximum relative aerosol concentration
@@ -25,13 +25,13 @@ N = 50 # Number of spatial intervals
 x = np.linspace(-90,90,N+1) # Spatial discretization
 h = x[1] - x[0] # Step size [lattitude degrees]
 
-if dt*(2*D/h**2 + gamma) >= 1: # check that solution will be stable
-    print('Solution unstable. dt*(2*D/h^2 + gamma) = ', dt*(2*D/h**2 + gamma))
+if dt*(2*D/h**2 + Gamma) >= 1: # check that solution will be stable
+    print('Solution unstable. dt*(2*D/h^2 + gamma) = ', dt*(2*D/h**2 + Gamma))
 
 def getCDM(): # Central difference matrix
     CDM = np.zeros((N-1,N-1))
     for i in range(N-1):
-        CDM[i,i] += -gamma
+        CDM[i,i] += -Gamma
         if i != 0:
             CDM[i,i] += -D/h**2
             CDM[i,i-1] = D/h**2
@@ -58,7 +58,7 @@ def plot_forcing(t,A,phi_k):
         ax[0].plot(x,A[:,i])
         legend.append('t = {} months'.format(t[i]))
     ax[0].legend(legend)
-    ax[0].set_title("Aerosol distributions, D = {}, $\gamma$ = {}, B = {}".format(D,gamma,B))
+    ax[0].set_title("Aerosol distributions, D = {}, $\gamma$ = {}, B = {}".format(D,Gamma,B))
     ax[0].set_xlabel('Latitude degrees')
     ax[0].set_ylabel('Relative aerosol concentration')
     ax[0].set_xticks(zone_xticks)
@@ -70,7 +70,7 @@ def plot_forcing(t,A,phi_k):
     ax[1].set_xlabel('Time (yr)')
     ax[1].set_ylabel('Relative incoming radiation')
     plt.show()
-    figname = "figures/forcing/forcing_{}_{}_{}_{}.png".format(D,gamma,B,beta)
+    figname = "figures/forcing/forcing_{}_{}_{}_{}.png".format(D,Gamma,B,beta)
     fig.savefig(figname)
 
 
@@ -98,10 +98,10 @@ def create_phi_funcs(tt_max):
             xrange = (x>=j*30)*(x<=(j+1)*30)
             phi_k[j+3,i] = np.mean(phi_continuous[xrange,i]) # Calculate zonal average
     
-    # plot_forcing(t,A,phi_k)
+    plot_forcing(t,A,phi_k)
 
     t_span_long = np.arange(t_end,t_end_long,dt_long)
-    phi_extension = np.array(list(map(lambda k: 1-(1-phi_k[k,-1])*np.exp(gamma*t[-1])*np.exp(-gamma*t_span_long),range(6))))
+    phi_extension = np.array(list(map(lambda k: 1-(1-phi_k[k,-1])*np.exp(Gamma*t[-1])*np.exp(-Gamma*t_span_long),range(6))))
     phi_k = np.append(phi_k,phi_extension,axis=1)
     t = np.append(t,t_span_long)
 
