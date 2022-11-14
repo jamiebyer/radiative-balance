@@ -27,7 +27,7 @@ h = x[1] - x[0] # Step size [lattitude degrees]
 if dt*(2*D/h**2 + gamma) >= 1: # check that solution will be stable
     print('Solution unstable. dt*(2*D/h^2 + gamma) = ', dt*(2*D/h**2 + gamma))
 
-def getCDM(): # Central different matrix
+def getCDM(): # Central difference matrix
     CDM = np.zeros((N-1,N-1))
     for i in range(N-1):
         CDM[i,i] += -gamma

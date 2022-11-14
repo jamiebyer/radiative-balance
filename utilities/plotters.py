@@ -2,9 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import animation
 import xarray as xr
-from utilities.odes import dT_dt, dT_dt_2d
+from utilities.odes import dT_dt, dT_dt_2d, dT_dt_phi
 from scipy.integrate import solve_ivp
-from utilities.write_from_models import get_2d_constants
+# from utilities.write_from_models import get_2d_constants
 #from mpl_toolkits.basemap import Basemap
 import plotly.graph_objects as go
 import plotly.express as px
@@ -20,7 +20,31 @@ def plot_model():
     # Initial temperatures
     T_init = [0, 212, 280, 296, 295, 268, 210, 0]
 
-    dTdtFunc = lambda t, T: dT_dt(t,T,t_max)
+    sol = solve_ivp(fun=dT_dt, t_span=(t_min, t_max), y0=T_init, method="LSODA", max_step=max_step)
+    t = sol.t
+    T = sol.y.T
+
+    plt.plot(t / 3.154E7, T[:, 1:-1])
+    
+    plt.title("radiative balance")
+    plt.xlabel("time (yr)")
+    plt.ylabel("temperature (K)")
+    plt.legend(["zone 1", "zone 2", "zone 3", "zone 4", "zone 5", "zone 6"])
+    
+    plt.tight_layout()
+    plt.show()
+
+def plot_model_withforcing():
+    # Time interval for integration (in seconds)
+    t_min = 0
+    # t_max = 1E11
+    t_max = 3E8
+    max_step = 1E6
+
+    # Initial temperatures
+    T_init = [0, 212, 280, 296, 295, 268, 210, 0]
+
+    dTdtFunc = lambda t, T: dT_dt_phi(t,T,t_max)
     sol = solve_ivp(fun=dTdtFunc, t_span=(t_min, t_max), y0=T_init, method="LSODA", max_step=max_step)
     t = sol.t
     T = sol.y.T
