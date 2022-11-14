@@ -86,9 +86,10 @@ phi_k = create_phi_funcs(t_max)
 
 def phi(tt, tt_max):
     if tt_max > t_max*mon2sec:
-        phi_funcs = create_phi_funcs(tt_max)
-    else:
-        phi_funcs = phi_k
+        phi_k = create_phi_funcs(tt_max)
+        t_max = tt_max/mon2sec + 1
+
+    phi_funcs = phi_k
     phi_k_t = np.ones(8)
     if tt < t_start:
         return phi_k_t
