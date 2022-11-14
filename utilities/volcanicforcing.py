@@ -98,7 +98,7 @@ def create_phi_funcs(tt_max):
             xrange = (x>=j*30)*(x<=(j+1)*30)
             phi_k[j+3,i] = np.mean(phi_continuous[xrange,i]) # Calculate zonal average
     
-    plot_forcing(t,A,phi_k)
+    # plot_forcing(t,A,phi_k)
 
     t_span_long = np.arange(t_end,t_end_long,dt_long)
     phi_extension = np.array(list(map(lambda k: 1-(1-phi_k[k,-1])*np.exp(Gamma*t[-1])*np.exp(-Gamma*t_span_long),range(6))))
