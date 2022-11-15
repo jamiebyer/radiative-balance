@@ -13,7 +13,6 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 def plot_model():
     # Time interval for integration (in seconds)
     t_min = 0
-    # t_max = 1E11
     t_max = 1E11
     max_step = 1E6
 
@@ -33,7 +32,7 @@ def plot_model():
     plt.legend(["zone 1", "zone 2", "zone 3", "zone 4", "zone 5", "zone 6"])
     
     plt.tight_layout()
-    plt.show()
+    plt.show(block = False)
 
 '''
 def plot_2d_model():
@@ -201,17 +200,29 @@ def plot_model_fracchanges():
     # Initial temperatures
     T_init = [0, 212, 280, 296, 295, 268, 210, 0]
 
-    dTdtFunc = lambda t, T: dT_dt_changefrac(t,T,t_max)
+    dTdtFunc = lambda t, T: dT_dt_changeall(t,T,t_max)
     sol = solve_ivp(fun=dTdtFunc, t_span=(t_min, t_max), y0=T_init, method="LSODA", max_step=max_step)
     t = sol.t
     T = sol.y.T
 
-    plt.plot(t / 3.154E7, T[:, 1:-1])
+    dTdtFunc = lambda t, T: dT_dt_changeco2force(t,T,t_max)
+    solco2 = solve_ivp(fun=dTdtFunc, t_span=(t_min, t_max), y0=T_init, method="LSODA", max_step=max_step)
+    t_co2 = solco2.t
+    T_co2 = solco2.y.T
+
+    colorvec = ['r', 'g', 'b', 'k', 'c', 'm']
+
+    for ii in range(1, 7):
+        plt.plot(t / 3.154E7, T[:, ii], color = colorvec[ii-1])\
+
+    plt.legend(["zone 1", "zone 2", "zone 3", "zone 4", "zone 5", "zone 6"])
+    for ii in range(1, 7):
+        plt.plot(t_co2 / 3.154E7, T_co2[:, ii], linestyle = ':', color = colorvec[ii-1])
     
-    plt.title("radiative balance")
+    plt.title("Forced Radiative Transfer with Volcanic Precip Rate = 0.0001")
     plt.xlabel("time (yr)")
     plt.ylabel("temperature (K)")
-    plt.legend(["zone 1", "zone 2", "zone 3", "zone 4", "zone 5", "zone 6"])
-    
+    plt.xlim([1750, 2200])
+    plt.ylim([250, 320])
     plt.tight_layout()
     plt.show()

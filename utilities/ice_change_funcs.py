@@ -14,16 +14,16 @@ def update_f(f, T):
         Updated array of land-type fractions
     '''
     # change of ice fraction each year (1-decadal_decrease/10)/secs/year
-    change_step = 12.6/3.154E7
+    change_step = 0.009
     fractional_changes_6 = np.array([0.5, 0.5, -1])*change_step
     fractional_changes_1 = np.array([0.9, 0.1, -1])*change_step
     ## Check temp in zone 6, if exceeds melting temperature change ice fraction
-    if T[6] >=  273. and f[5, 2] > 0:
+    if T[6] >=  264. and f[5, 2] > 0:
         f[5,:] = fractional_changes_6 + f[5,:]
     else:
         pass
     ## Check zone 1, if exceeds melting temperature change ice fraction
-    if T[1] >= 273. and f[0, 2] > 0:
+    if T[1] >= 264. and f[0, 2] > 0:
         f[0,:] = fractional_changes_1 + f[0,:]
     else:
         pass
@@ -49,8 +49,9 @@ def atmos_emissivity(t):
         model_to_fit = np.polyfit(year, temp_record, 2)
         fit_to_temp_record = np.poly1d(model_to_fit)
         emissivity = 2*(1-(T_e/fit_to_temp_record(t))**(4))
-    else: 
+    elif t < 1880 or t > 2100: 
         # Determine unforced temperature value taking mean of temperature from 1880 - 1920
         temp_unforced = np.mean(temp_record[0:39])
         emissivity = 2*(1-(T_e/temp_unforced)**(4))
+        #emissivity = 2*(1-transmissivity)
     return emissivity
